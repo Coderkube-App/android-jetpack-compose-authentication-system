@@ -8,11 +8,7 @@ plugins {
 
 android {
     namespace = "com.ck.events.app"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.ck.events.app"
@@ -64,6 +60,14 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.navigation.compose)
 
     implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.firestore.ktx)
+
+    implementation(libs.androidx.compose.material.icons.extended)
+
+    // Google Sign-In
+    implementation(libs.play.services.auth)
 }

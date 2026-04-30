@@ -4,13 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.ck.events.app.presentation.navigation.AuthNavigation
+import com.ck.events.app.presentation.navigation.Screen
+import com.ck.events.app.presentation.viewmodels.MainViewModel
 import com.ck.events.app.ui.theme.ComposeAuthSystemTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,29 +18,12 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ComposeAuthSystemTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                val mainViewModel: MainViewModel = hiltViewModel()
+                val startDestination = mainViewModel.startDestination
+
+                // Default to Login screen to avoid splash loader 'freeze'
+                AuthNavigation(startDestination = startDestination ?: Screen.Login.route)
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ComposeAuthSystemTheme {
-        Greeting("Android")
     }
 }
